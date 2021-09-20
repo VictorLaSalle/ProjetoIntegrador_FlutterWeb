@@ -6,7 +6,7 @@ Integrantes: Victor, Sadí, Gunther, Ramires, Isac
 
 O projeto consiste em uma pesquisa de mercado para prospectar associados em potencial fomentando a área gastronômica da ACICC, dessa forma, podendo ter insights para a realização de eventos, treinamentos e demais suportes prósperos associados e/ou comerciários ou indústrias.
 
-Esta é a parte que formaliza o front-end, ou seja, a interface gráfica da aplicação. A aplicação está subdividida em duas partes, esta, o front-end e o back-end, no qual este último será encarregado por realizar o processamento dos dados e alocar em respectivas bases de dados para consultas posteriores.
+Esta é a parte que formaliza o front-end, ou seja, a interface gráfica da aplicação. A aplicação está subdividida em duas partes, esta, o front-end e o back-end, no qual este último será encarregado por realizar a aquisição dos dados, o processamento e a montagem da interface gráfica.
 
 A infraestrutura da aplicação está arquiteturada sob microsserviços que esta é uma arquitetura muito difundida para sistemas que possui um nível de complexidade elevado, podendo fragmentar a infraestrutura em diversos mecanismos, cada um possuindo uma responsabilidade única e facilitando sua manutenção posterior.
 
