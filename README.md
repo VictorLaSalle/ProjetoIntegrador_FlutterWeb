@@ -4,7 +4,7 @@ Projeto integrador idealizado para prospecção de supostos associados da área 
 # Grupo 2
 Integrantes: Victor, Sadí, Gunther, Ramires, Isac
 
-O projeto consiste em uma pesquisa de mercado para prospectar associados em potencial fomentando a área gastronômica da ACICC, dessa forma, podendo ter insights para a realização de eventos, treinamentos e demais suportes prósperos associados e/ou comerciários ou indústrias.
+O projeto consiste em uma pesquisa de mercado para prospectar associados em potencial fomentando a área gastronômica da ACICC, dessa forma, podendo ter insights para a realização de eventos, treinamentos e demais suportes prósperos para associados e/ou comerciários e/ou indústrias.
 
 Esta é a parte que formaliza o front-end, ou seja, a interface gráfica da aplicação. A aplicação está subdividida em duas partes, esta, o front-end e o back-end, no qual este último será encarregado por realizar a aquisição dos dados, o processamento e a montagem da interface gráfica.
 
