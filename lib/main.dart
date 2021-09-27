@@ -3,8 +3,5 @@ import 'package:get/get.dart';
 import './pages/login/login_page.dart';
 
 void main() {
-  runApp(GetMaterialApp(
-      home: Login()
-  ));
+  runApp(GetMaterialApp(home: LoginPage()));
 }
-
