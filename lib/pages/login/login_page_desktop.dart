@@ -39,11 +39,10 @@ class LoginPageDesktop extends StatelessWidget {
         children: [
           WhiteTextField('Insira seu email',
               MediaQuery.of(context).size.width * 0.15, EdgeInsets.zero),
-          SizedBox(height: 100),
+          SizedBox(height: 50),
           WhiteTextField('Insira sua senha',
               MediaQuery.of(context).size.width * 0.15, EdgeInsets.zero,
               obscureText: true),
-          SizedBox(height: 75),
           RoundedButton(
             text: 'Entrar',
             onPressed: () {},
