@@ -4,5 +4,5 @@ import './pages/login/login_page.dart';
 import 'components/container/containerShadow.dart';
 
 void main() {
-  runApp(GetMaterialApp(home: ContainerShadow()));
+  runApp(GetMaterialApp(home: LoginPage()));
 }
