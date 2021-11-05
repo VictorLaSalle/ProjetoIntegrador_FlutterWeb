@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   get: 4.3.8
-  dio: 4.0.0
+  http:
+  shared_preferences:
   responsive_builder: ^0.4.1
 
 

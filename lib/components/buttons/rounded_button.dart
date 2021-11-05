@@ -5,7 +5,7 @@ class RoundedButton extends StatelessWidget {
   final Function() _onPressed;
   final double _height;
   final double _width = 140;
-  EdgeInsets? _margin = EdgeInsets.all(20);
+  final EdgeInsets? _margin = EdgeInsets.all(20);
 
   RoundedButton({required text, required onPressed, required height, margin})
       : this._text = text,

@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import '../../components/buttons/rounded_button.dart';
 
 class LoginPageMobile extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
+  final LoginController _controller = Get.put(LoginController());
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,16 +42,18 @@ class LoginPageMobile extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                WhiteTextField('Email', MediaQuery.of(context).size.width * 0.3,
+                WhiteTextField('Email', _email,
+                MediaQuery.of(context).size.width * 0.3,
                     EdgeInsets.only(top: 15)),
                 SizedBox(height: 100),
-                WhiteTextField('Senha', MediaQuery.of(context).size.width * 0.3,
+                WhiteTextField('Senha', _password,
+                MediaQuery.of(context).size.width * 0.3,
                     EdgeInsets.zero,
                     obscureText: true),
                 SizedBox(height: 75),
                 RoundedButton(
                   text: 'Entrar',
-                  onPressed: () {},
+                  onPressed: () => _controller.connect(_email.value.text, _password.value.text),
                   height: 40,
                 )
               ],

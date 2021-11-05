@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import '../../components/buttons/rounded_button.dart';
 
 class LoginPageDesktop extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
+  final LoginController _controller = Get.put(LoginController());
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,15 +39,15 @@ class LoginPageDesktop extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          WhiteTextField('Insira seu email',
+          WhiteTextField('Insira seu email', _email,
               MediaQuery.of(context).size.width * 0.15, EdgeInsets.zero),
           SizedBox(height: 50),
-          WhiteTextField('Insira sua senha',
+          WhiteTextField('Insira sua senha', _password,
               MediaQuery.of(context).size.width * 0.15, EdgeInsets.zero,
               obscureText: true),
           RoundedButton(
             text: 'Entrar',
-            onPressed: () {},
+            onPressed: () => _controller.connect(_email.value.text, _password.value.text),
             height: 40,
           )
         ],

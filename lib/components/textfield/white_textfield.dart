@@ -5,10 +5,13 @@ class WhiteTextField extends StatelessWidget {
   final bool? _obscureText;
   final TextStyle _textStyle = TextStyle(color: Colors.white);
   final double _width;
-  EdgeInsets _margin;
+  final EdgeInsets _margin;
+  final TextEditingController _controller;
 
-  WhiteTextField(this._hintText, width, margin, {obscureText = false})
-      : this._width = width,
+  WhiteTextField(String hintText, TextEditingController controller, double width, EdgeInsets margin, {bool obscureText = false})
+      : this._controller = controller,
+        this._hintText = hintText,
+        this._width = width,
         this._obscureText = obscureText,
         this._margin = margin;
 
@@ -17,6 +20,7 @@ class WhiteTextField extends StatelessWidget {
       margin: this._margin,
       width: _width,
       child: TextFormField(
+        controller: this._controller,
         style: this._textStyle,
         cursorColor: Colors.white,
         obscureText: this._obscureText!,
