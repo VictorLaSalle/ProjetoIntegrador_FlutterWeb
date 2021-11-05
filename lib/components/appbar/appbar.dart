@@ -3,8 +3,7 @@ import 'package:flutter/painting.dart';
 
 class Appbar extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return AppBar(
         backgroundColor: Colors.orange,
         iconTheme: IconThemeData(
           color: Colors.black,
@@ -31,12 +30,6 @@ class Appbar extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      body: const Center(
-        child: Text(
-          'home page',
-          style: TextStyle(fontSize: 24),
-        ),
       ),
     );
   }
