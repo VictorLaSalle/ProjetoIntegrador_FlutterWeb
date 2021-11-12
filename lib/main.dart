@@ -1,8 +1,8 @@
+import 'package:development/pages/principal/principal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './pages/login/login_page.dart';
-import 'components/container/containerShadow.dart';
 
 void main() {
-  runApp(GetMaterialApp(home: LoginPage()));
+  runApp(GetMaterialApp(home: PrincipalPage()));
 }

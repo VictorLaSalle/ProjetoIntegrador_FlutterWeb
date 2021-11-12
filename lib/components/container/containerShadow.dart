@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ContainerShadow extends StatelessWidget {
+
+  ContainerShadow(this._child);
+
+  Widget _child;
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return Center(
         child: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -15,14 +19,14 @@ class ContainerShadow extends StatelessWidget {
                 BoxShadow(
                   color: Colors.black,
                   blurRadius: 15.0,
-                  offset: Offset(0.0, 0.75),
+                  offset: Offset(0.5, 0.5),
                 )
               ]),
           alignment: Alignment.center,
-          width: 1100,
-          height: 550,
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.width * 0.4,
+          child: this._child,
         ),
-      ),
-    );
+      );
   }
 }

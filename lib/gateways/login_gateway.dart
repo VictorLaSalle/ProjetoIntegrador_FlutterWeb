@@ -1,24 +1,14 @@
-import 'dart:convert';
-
-import 'package:development/domains/enums/httpAdapter_enum.dart';
 import 'package:development/domains/models/userLogin_model.dart';
-import 'package:development/httpAdapter.dart';
-import 'package:http/http.dart';
-
+import 'package:retrofit/retrofit.dart';
+import 'package:dio/dio.dart';
 import '../constants.dart';
+part 'login_gateway.g.dart';
 
-class LoginGateway {
+@RestApi(baseUrl: "https://piauthapi.herokuapp.com")
+abstract class LoginGateway {
 
-  late HttpAdapter _adapter;
+  factory LoginGateway(Dio dio, {String baseUrl}) = _LoginGateway;
 
-  login(Map<String, dynamic> body) async {
-
-      this._adapter = HttpAdapter(adapter: HttpAdapterEnum.Http);
-      Response? data = await this._adapter.post(piAuthAPI, body: json.encode(body));
-   
-      return UserLoginModel.fromJson(json.decode(data!.body), data.statusCode);
-
-    
-  }
-
+  @POST(piAuthAPIEndpoint)
+  Future<UserLoginModel> getLogin(@Body() Map<String, dynamic> body);
 }

@@ -6,16 +6,16 @@ class UserLoginModel {
   get statusCode => this._statusCode;
   get token => this._token;
 
-  UserLoginModel(int statusCode, String token);
+  UserLoginModel(String token, int status) :
+    this._token = token,
+    this._statusCode = status;
 
-  factory UserLoginModel.fromJson(Map<String, dynamic> json, int status) {
+  factory UserLoginModel.fromJson(Map<String, dynamic> json) {
 
-    int statusCode = status;
     String token = json['token'];
+    int status = json['status'];
 
-    UserLoginModel model = UserLoginModel(statusCode, token);
-
-    return model;
+    return UserLoginModel(token, status);
   }
 
   static toJson(String email, String password) {

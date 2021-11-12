@@ -1,2 +1,5 @@
-final String gsheetsAPI = 'http://gsheetsapi.herokuapp.com/getData';
-final String piAuthAPI = 'https://piauthapi.herokuapp.com/login';
+const String gsheetsAPI = 'http://gsheetsapi.herokuapp.com';
+const String piAuthAPI = 'https://piauthapi.herokuapp.com';
+
+const String gsheetsAPIEndpoint = '/getData';
+const String piAuthAPIEndpoint =  '/login';
