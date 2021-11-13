@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './login_controller.dart';
 import 'package:get/get.dart';
 import '../../components/buttons/rounded_button.dart';
+import '../../components/buttons/border_button.dart';
 
 class LoginPageMobile extends StatelessWidget {
   final LoginController _controller = Get.put(LoginController());
@@ -50,6 +51,7 @@ class LoginPageMobile extends StatelessWidget {
                 MediaQuery.of(context).size.width * 0.3,
                     EdgeInsets.zero,
                     obscureText: true),
+                _getUploadButton(),
                 SizedBox(height: 75),
                 RoundedButton(
                   text: 'Entrar',
@@ -71,6 +73,19 @@ class LoginPageMobile extends StatelessWidget {
         Color(0xff053D7A).withOpacity(0.6),
         Color(0xff053D7A)
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+    );
+  }
+
+  Widget _getUploadButton() {
+    return Container(
+        margin: EdgeInsets.only(top: 20),
+      child: BorderButton(
+          "Carregar arquivo",
+          Icons.upload_rounded,
+              _controller.loadPrivateKey,
+          MediaQuery.of(Get.context!).size.width * 0.2,
+          MediaQuery.of(Get.context!).size.height * 0.1
+      ),
     );
   }
 }

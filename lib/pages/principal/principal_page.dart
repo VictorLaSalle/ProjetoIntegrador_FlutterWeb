@@ -18,33 +18,10 @@ class PrincipalPage extends StatelessWidget {
           child: Stack(
             children: [
               Background(),
-              getContainer()
+
             ],
           )
       ),
     );
-  }
-
-  List<SheetsData> getChartData(){
-    final List<SheetsData> chartData = [
-      SheetsData('Sim', 12),
-      SheetsData('Não', 5),
-    ];
-    return chartData;
-  }
-
-  Widget getContainer() {
-    return
-       ContainerShadow(
-                  Row(
-                   children: List.generate(3, (index) => Expanded(
-                     child: Container(
-                       width: 200,
-                       height: 200,
-                       child: Charts(getChartData(), 'title'),
-                     )
-                   )),
-                 )
-       );
   }
 }

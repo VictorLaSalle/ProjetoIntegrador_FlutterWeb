@@ -1,3 +1,4 @@
+import 'package:development/components/buttons/border_button.dart';
 import 'package:development/components/textfield/white_textfield.dart';
 import 'package:flutter/material.dart';
 import './login_controller.dart';
@@ -45,6 +46,7 @@ class LoginPageDesktop extends StatelessWidget {
           WhiteTextField('Insira sua senha', _password,
               MediaQuery.of(context).size.width * 0.15, EdgeInsets.zero,
               obscureText: true),
+          _getUploadButton(),
           RoundedButton(
             text: 'Entrar',
             onPressed: () => _controller.connect(_email.value.text, _password.value.text),
@@ -98,6 +100,19 @@ class LoginPageDesktop extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  Widget _getUploadButton() {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: BorderButton(
+          "Carregar arquivo",
+          Icons.upload_rounded,
+          _controller.loadPrivateKey,
+          MediaQuery.of(Get.context!).size.width * 0.14,
+          MediaQuery.of(Get.context!).size.height * 0.1
+      ),
     );
   }
 }

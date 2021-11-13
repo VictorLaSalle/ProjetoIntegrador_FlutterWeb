@@ -1,24 +1,39 @@
+
+import 'dart:typed_data';
+
+import 'package:development/domains/models/private_key_model.dart';
 import 'package:development/gateways/login_gateway.dart';
+import 'package:development/pages/principal/principal_controller.dart';
 import 'package:development/pages/principal/principal_page.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import '../../domains/models/userLogin_model.dart';
 import 'package:dio/dio.dart';
 
+
 class LoginController extends GetxController {
   LoginGateway _login = LoginGateway(Dio());
+  PrincipalController _principalController = PrincipalController();
+
+  FilePickerResult? _result;
+  Uint8List? _file;
+  PrivateKey? _key;
 
   void connect(String email, String password) async {
     if (email.trim() != '' || password.trim() != '') {
-      
+      if(_key != null) {
+        _principalController.getData(_key!);
+
+
         try {
           UserLoginModel response =
           await _login.getLogin(UserLoginModel.toJson(email, password));
 
+
           if (response.statusCode == 200) {
             Get.to(PrincipalPage());
           }
-
-        } on DioError catch(error) {
+        } on DioError catch (error) {
           if (error.response!.statusCode == 403) {
             Get.snackbar('Divergência',
                 'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
@@ -27,10 +42,36 @@ class LoginController extends GetxController {
                 'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
           }
         }
+      } else {
+        Get.snackbar('Divergência',
+            'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
+      }
       
     } else {
       Get.snackbar('Divergência',
           'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
     }
   }
+
+   Future _fileLoader() async {
+    _result = null;
+    _result = await FilePicker.platform.pickFiles();
+
+    if(_result != null) {
+      _file = _result!.files.single.bytes!;
+    }
+  }
+
+  loadPrivateKey() async {
+    try {
+      await _fileLoader();
+      _key = PrivateKey.fromJson(_file!);
+      print(_key!.privateKey);
+
+    } catch(error) {
+      Get.snackbar('Divergência',
+          'Certificado inválido. Verifique o arquivo e tente novamente');
+    }
+  }
+
 }
