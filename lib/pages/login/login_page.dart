@@ -6,10 +6,9 @@ import 'package:responsive_builder/responsive_builder.dart';
 class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
-      builder: (context, sizingInformation) =>
-          sizingInformation.isMobile || sizingInformation.isTablet
-              ? LoginPageMobile()
-              : LoginPageDesktop(),
-    );
+        builder: (context, sizingInformation) =>
+            sizingInformation.isMobile || sizingInformation.isTablet
+                ? LoginPageMobile()
+                : LoginPageDesktop());
   }
 }

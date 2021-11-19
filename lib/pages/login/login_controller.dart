@@ -15,13 +15,14 @@ class LoginController extends GetxController {
   LoginGateway _login =
       LoginGateway(Dio(BaseOptions(contentType: "application/json")));
   SharedPreferences? _prefs;
-  PrincipalController _principalController = PrincipalController();
 
   FilePickerResult? _result;
   Uint8List? _file;
   PrivateKey? _key;
 
   void connect(String email, String password) async {
+    PrincipalController _principalController = Get.find<PrincipalController>();
+
     if (email.trim() != '' || password.trim() != '') {
       if (_key != null) {
         try {
@@ -29,7 +30,7 @@ class LoginController extends GetxController {
               await _login.getLogin(UserLoginModel.toJson(email, password));
           setCredentials(response.token, _key!);
 
-          await _principalController.getData();
+          await _principalController.getData(_key!.privateKey);
 
           if (response.statusCode == 200) {
             Get.to(PrincipalPage());
@@ -58,7 +59,7 @@ class LoginController extends GetxController {
     _result = await FilePicker.platform.pickFiles();
 
     if (_result != null) {
-      _file = _result!.files.single.bytes!;
+      _file = _result!.files.single.bytes;
     }
   }
 
@@ -74,6 +75,7 @@ class LoginController extends GetxController {
 
   setCredentials(String token, PrivateKey privateKey) async {
     _prefs = await SharedPreferences.getInstance();
+    _prefs!.clear();
     _prefs!.setString(describe(LocalStorageEnum.token), token);
     _prefs!.setString(
         describe(LocalStorageEnum.private_key), privateKey.privateKey);

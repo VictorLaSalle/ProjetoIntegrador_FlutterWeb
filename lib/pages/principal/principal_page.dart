@@ -1,5 +1,7 @@
 import 'package:development/components/appbar/custom_appbar.dart';
 import 'package:development/components/background.dart';
+import 'package:development/components/buttons/next_button.dart';
+import 'package:development/components/buttons/previous_button.dart';
 import 'package:development/components/charts.dart';
 import 'package:development/components/container/containerShadow.dart';
 import 'package:development/pages/principal/principal_controller.dart';
@@ -8,10 +10,12 @@ import 'package:get/get.dart';
 import 'package:development/constants.dart';
 
 class PrincipalPage extends StatelessWidget {
-  final PrincipalController _controller = Get.put(PrincipalController());
-  final PageController _pageView = PageController();
+  final PrincipalController _controller = Get.find<PrincipalController>();
 
   Widget build(BuildContext context) {
+    final PageController _pageView =
+        PageController(initialPage: _controller.indexPage.value);
+
     return Scaffold(
       appBar: CustomAppbar(
         centerTitle: true,
@@ -30,8 +34,16 @@ class PrincipalPage extends StatelessWidget {
                   children: [getSet1(), getSet2(), getSet3()],
                   allowImplicitScrolling: true,
                   scrollDirection: Axis.horizontal)),
-          ElevatedButton(
-              onPressed: () => _pageView.jumpToPage(1), child: Text("vai"))
+          Container(
+              margin: EdgeInsets.only(right: 100),
+              alignment: Alignment.centerRight,
+              child: NextButton(
+                  () => _pageView.jumpToPage(_controller.incrementIndex()))),
+          Container(
+              margin: EdgeInsets.only(left: 100),
+              alignment: Alignment.centerLeft,
+              child: PreviousButton(
+                  () => _pageView.jumpToPage(_controller.decrementIndex())))
         ],
       )),
     );
@@ -46,30 +58,36 @@ class PrincipalPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: MediaQuery.of(Get.context!).size.width / 0.2,
-                height: MediaQuery.of(Get.context!).size.height / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
                 child: Charts([
-                  SheetsData("Sim", _controller.respostas!.resposta1['sim']),
-                  SheetsData("Não", _controller.respostas!.resposta1['nao'])
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta1!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta1!['nao'])
                 ], pergunta1),
               ),
             ),
             Expanded(
               child: Container(
                 width: MediaQuery.of(Get.context!).size.width / 0.2,
-                height: MediaQuery.of(Get.context!).size.height / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
                 child: Charts([
-                  SheetsData("Sim", _controller.respostas!.resposta2['sim']),
-                  SheetsData("Não", _controller.respostas!.resposta2['nao'])
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta2!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta2!['nao'])
                 ], pergunta2),
               ),
             ),
             Expanded(
               child: Container(
                 width: MediaQuery.of(Get.context!).size.width / 0.2,
-                height: MediaQuery.of(Get.context!).size.height / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
                 child: Charts([
-                  SheetsData("Sim", _controller.respostas!.resposta3['sim']),
-                  SheetsData("Não", _controller.respostas!.resposta3['nao'])
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta3!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta3!['nao'])
                 ], pergunta3),
               ),
             )
@@ -77,7 +95,7 @@ class PrincipalPage extends StatelessWidget {
   }
 
   Widget getSet2() {
-    return ContainerShadow(ContainerShadow(Obx(() => _controller.loading.value
+    return ContainerShadow(Obx(() => _controller.loading.value
         ? CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           )
@@ -85,17 +103,44 @@ class PrincipalPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: MediaQuery.of(Get.context!).size.width / 0.2,
-                height: MediaQuery.of(Get.context!).size.height / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
                 child: Charts([
-                  SheetsData("Sim", _controller.respostas!.resposta2['sim'])
-                ], pergunta1),
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta4!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta4!['nao'])
+                ], pergunta4),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(Get.context!).size.width / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
+                child: Charts([
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta5!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta5!['nao'])
+                ], pergunta5),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(Get.context!).size.width / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
+                child: Charts([
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta6!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta6!['nao'])
+                ], pergunta6),
               ),
             )
-          ]))));
+          ])));
   }
 
   Widget getSet3() {
-    return ContainerShadow(ContainerShadow(Obx(() => _controller.loading.value
+    return ContainerShadow(Obx(() => _controller.loading.value
         ? CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           )
@@ -103,12 +148,39 @@ class PrincipalPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: MediaQuery.of(Get.context!).size.width / 0.2,
-                height: MediaQuery.of(Get.context!).size.height / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
                 child: Charts([
-                  SheetsData("Sim", _controller.respostas!.resposta3['sim'])
-                ], pergunta1),
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta7!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta7!['nao'])
+                ], pergunta7),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(Get.context!).size.width / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
+                child: Charts([
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta8!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta8!['nao'])
+                ], pergunta8),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(Get.context!).size.width / 0.2,
+                height: MediaQuery.of(Get.context!).size.height / 0.1,
+                child: Charts([
+                  SheetsData(
+                      "Sim", _controller.respostas.value.resposta9!['sim']),
+                  SheetsData(
+                      "Não", _controller.respostas.value.resposta9!['nao'])
+                ], pergunta9),
               ),
             )
-          ]))));
+          ])));
   }
 }

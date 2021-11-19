@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../components/buttons/rounded_button.dart';
 
 class LoginPageDesktop extends StatelessWidget {
-  final LoginController _controller = Get.put(LoginController());
+  final LoginController _controller = Get.find<LoginController>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
@@ -49,7 +49,8 @@ class LoginPageDesktop extends StatelessWidget {
           _getUploadButton(),
           RoundedButton(
             text: 'Entrar',
-            onPressed: () => _controller.connect(_email.value.text, _password.value.text),
+            onPressed: () =>
+                _controller.connect(_email.value.text, _password.value.text),
             height: 40,
           )
         ],
@@ -111,8 +112,7 @@ class LoginPageDesktop extends StatelessWidget {
           Icons.upload_rounded,
           _controller.loadPrivateKey,
           MediaQuery.of(Get.context!).size.width * 0.14,
-          MediaQuery.of(Get.context!).size.height * 0.1
-      ),
+          MediaQuery.of(Get.context!).size.height * 0.1),
     );
   }
 }

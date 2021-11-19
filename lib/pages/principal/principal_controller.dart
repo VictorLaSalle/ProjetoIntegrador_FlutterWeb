@@ -1,5 +1,4 @@
 import 'package:development/domains/enums/localStorage_enum.dart';
-import 'package:development/domains/models/private_key_model.dart';
 import 'package:development/domains/models/respostas_model.dart';
 import 'package:development/gateways/gsheetsapi_gateway.dart';
 import 'package:dio/dio.dart';
@@ -9,20 +8,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PrincipalController extends GetxController {
   GSheetsApi _gSheetsApi = GSheetsApi(Dio());
   SharedPreferences? _prefs;
-  Respostas? respostas;
+  Rx<Respostas> respostas = Respostas().obs;
   RxBool loading = false.obs;
+  RxInt indexPage = 0.obs;
 
-  @override
-  void onInit() async {
-    await getData();
-    super.onInit();
-  }
-
-  Future getData() async {
+  Future getData(String key) async {
     try {
       loading.value = true;
-      respostas = await _gSheetsApi.getData(
-          {"private_key": await getPrivateKey(), "token": await getToken()});
+      respostas.value = await _gSheetsApi
+          .getData({"private_key": key, "token": await getToken()});
       loading.value = false;
     } on DioError catch (error) {
       loading.value = false;
@@ -34,6 +28,23 @@ class PrincipalController extends GetxController {
             'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
       }
     }
+  }
+
+  int incrementIndex() {
+    if (indexPage.value < 2) {
+      ++indexPage.value;
+      update();
+      return indexPage.value;
+    }
+    return indexPage.value;
+  }
+
+  int decrementIndex() {
+    if (indexPage.value > 0) {
+      --indexPage.value;
+      update();
+    }
+    return indexPage.value;
   }
 
   getToken() async {

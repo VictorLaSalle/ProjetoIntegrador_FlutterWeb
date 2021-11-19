@@ -12,7 +12,9 @@ class Charts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfCircularChart(
-      title: ChartTitle(text: this._title),
+      title: ChartTitle(
+        text: this._title,
+      ),
       legend: Legend(isVisible: true),
       series: <CircularSeries>[
         DoughnutSeries<SheetsData, String>(
@@ -20,8 +22,9 @@ class Charts extends StatelessWidget {
             xValueMapper: (SheetsData data, _) => data.answer,
             yValueMapper: (SheetsData data, _) => data.amount,
             dataLabelSettings: DataLabelSettings(
-              isVisible: true,
-            ))
+                labelPosition: ChartDataLabelPosition.inside,
+                isVisible: true,
+                margin: EdgeInsets.all(0)))
       ],
     );
   }
@@ -29,6 +32,6 @@ class Charts extends StatelessWidget {
 
 class SheetsData {
   SheetsData(this.answer, this.amount);
-  final String answer;
-  final double amount;
+  String answer;
+  double amount;
 }
