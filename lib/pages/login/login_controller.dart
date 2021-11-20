@@ -16,9 +16,11 @@ class LoginController extends GetxController {
       LoginGateway(Dio(BaseOptions(contentType: "application/json")));
   SharedPreferences? _prefs;
 
-  FilePickerResult? _result;
-  Uint8List? _file;
+  FilePickerResult? result;
+  Uint8List? file;
   PrivateKey? _key;
+
+  RxBool isLoading = false.obs;
 
   void connect(String email, String password) async {
     PrincipalController _principalController = Get.find<PrincipalController>();
@@ -26,47 +28,65 @@ class LoginController extends GetxController {
     if (email.trim() != '' || password.trim() != '') {
       if (_key != null) {
         try {
+          isLoading.value = true;
           UserLoginModel response =
               await _login.getLogin(UserLoginModel.toJson(email, password));
           setCredentials(response.token, _key!);
 
-          await _principalController.getData(_key!.privateKey);
-
-          if (response.statusCode == 200) {
-            Get.to(PrincipalPage());
+          try {
+            await _principalController.getData();
+            isLoading.value = false;
+          } catch (error) {
+            isLoading.value = false;
+            Get.snackbar('Erro',
+                'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
           }
-        } on DioError catch (error) {
-          if (error.response!.statusCode == 403) {
+
+          if (response.statusCode == 200 && result != null && file != null) {
+            isLoading.value = false;
+            Get.to(PrincipalPage());
+          } else {
             Get.snackbar('Divergência',
                 'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
-          } else if (error.response!.statusCode == 500) {
+          }
+        } catch (error) {
+          isLoading.value = false;
+          if (error is DioError && error.response!.statusCode == 403) {
+            Get.snackbar('Divergência',
+                'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
+          } else if (error is DioError && error.response!.statusCode == 500) {
+            Get.snackbar('Erro',
+                'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
+          } else {
             Get.snackbar('Erro',
                 'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
           }
         }
       } else {
+        isLoading.value = false;
         Get.snackbar('Divergência',
             'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
       }
     } else {
+      isLoading.value = false;
       Get.snackbar('Divergência',
           'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
     }
   }
 
   Future _fileLoader() async {
-    _result = null;
-    _result = await FilePicker.platform.pickFiles();
+    result = null;
+    result = await FilePicker.platform.pickFiles();
 
-    if (_result != null) {
-      _file = _result!.files.single.bytes;
+    if (result != null) {
+      file = result!.files.single.bytes;
     }
   }
 
   loadPrivateKey() async {
     try {
       await _fileLoader();
-      _key = PrivateKey.fromJson(_file!);
+      _key = PrivateKey.fromJson(file!);
     } catch (error) {
       Get.snackbar('Divergência',
           'Certificado inválido. Verifique o arquivo e tente novamente');

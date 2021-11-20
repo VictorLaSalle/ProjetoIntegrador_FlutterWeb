@@ -29,7 +29,7 @@ class LoginPageMobile extends StatelessWidget {
 
   Widget _getLoginBox(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.8,
         width: MediaQuery.of(context).size.width * 0.6,
         decoration: BoxDecoration(
             border: Border.all(
@@ -55,9 +55,25 @@ class LoginPageMobile extends StatelessWidget {
                 _getUploadButton(),
                 SizedBox(height: 75),
                 RoundedButton(
-                  text: 'Entrar',
-                  onPressed: () => _controller.connect(
-                      _email.value.text, _password.value.text),
+                  child: Obx(() => _controller.isLoading.value
+                      ? Container(
+                          width: 25,
+                          height: 25,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.orange),
+                          ),
+                        )
+                      : Text(
+                          'Entrar',
+                          style: TextStyle(color: Colors.orange),
+                        )),
+                  onPressed: () {
+                    _controller.connect(
+                        _email.value.text, _password.value.text);
+                    _email.clear();
+                    _password.clear();
+                  },
                   height: 40,
                 )
               ],

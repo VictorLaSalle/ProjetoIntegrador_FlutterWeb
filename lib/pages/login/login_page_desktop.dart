@@ -30,7 +30,7 @@ class LoginPageDesktop extends StatelessWidget {
 
   Widget _getLoginBox(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width * 0.23,
       decoration: BoxDecoration(
           border: Border.all(
@@ -48,11 +48,25 @@ class LoginPageDesktop extends StatelessWidget {
               obscureText: true),
           _getUploadButton(),
           RoundedButton(
-            text: 'Entrar',
-            onPressed: () =>
-                _controller.connect(_email.value.text, _password.value.text),
+            child: Obx(() => _controller.isLoading.value
+                ? Container(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+                    ),
+                  )
+                : Text(
+                    'Entrar',
+                    style: TextStyle(color: Colors.orange),
+                  )),
+            onPressed: () {
+              _controller.connect(_email.value.text, _password.value.text);
+              _email.clear();
+              _password.clear();
+            },
             height: 40,
-          )
+          ),
         ],
       ),
     );
