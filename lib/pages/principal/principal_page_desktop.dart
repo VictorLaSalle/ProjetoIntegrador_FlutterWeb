@@ -16,50 +16,53 @@ class PrincipalPageDesktop extends StatelessWidget {
     final PageController _pageView =
         PageController(initialPage: _controller.indexPageDesktop.value);
 
-    return Scaffold(
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 40, right: 50),
-        child: FloatingActionButton(
-          child: Icon(Icons.refresh, color: Colors.white),
-          onPressed: () async => _controller.getData(),
-          backgroundColor: Colors.orange,
+    return WillPopScope(
+      child: Scaffold(
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(bottom: 40, right: 50),
+          child: FloatingActionButton(
+            child: Icon(Icons.refresh, color: Colors.white),
+            onPressed: () async => _controller.getData(),
+            backgroundColor: Colors.orange,
+          ),
         ),
+        appBar: CustomAppbar(
+          centerTitle: true,
+          title: Text("ACICC"),
+          leading: IconButton(
+              onPressed: () async => await _controller.logout(),
+              icon: Icon(Icons.logout)),
+          backgroundColor: Colors.orange,
+          shadowColor: Colors.transparent,
+        ),
+        body: Container(
+            child: Stack(
+              children: [
+                Background(),
+                Center(
+                    child: PageView(
+                        controller: _pageView,
+                        children: [getSet1(), getSet2(), getSet3()],
+                        allowImplicitScrolling: true,
+                        scrollDirection: Axis.horizontal)),
+                Obx(() => _controller.indexPageDesktop.value < 2
+                    ? Container(
+                    margin: EdgeInsets.only(right: 40),
+                    alignment: Alignment.centerRight,
+                    child: NextButton(() => _pageView
+                        .jumpToPage(_controller.incrementIndexDesktop())))
+                    : Container()),
+                Obx(() => _controller.indexPageDesktop.value > 0
+                    ? Container(
+                    margin: EdgeInsets.only(left: 40),
+                    alignment: Alignment.centerLeft,
+                    child: PreviousButton(() => _pageView
+                        .jumpToPage(_controller.decrementIndexDesktop())))
+                    : Container())
+              ],
+            )),
       ),
-      appBar: CustomAppbar(
-        centerTitle: true,
-        title: Text("ACICC"),
-        leading: IconButton(
-            onPressed: () async => await _controller.logout(),
-            icon: Icon(Icons.logout)),
-        backgroundColor: Colors.orange,
-        shadowColor: Colors.transparent,
-      ),
-      body: Container(
-          child: Stack(
-        children: [
-          Background(),
-          Center(
-              child: PageView(
-                  controller: _pageView,
-                  children: [getSet1(), getSet2(), getSet3()],
-                  allowImplicitScrolling: true,
-                  scrollDirection: Axis.horizontal)),
-          Obx(() => _controller.indexPageDesktop.value < 2
-              ? Container(
-                  margin: EdgeInsets.only(right: 40),
-                  alignment: Alignment.centerRight,
-                  child: NextButton(() => _pageView
-                      .jumpToPage(_controller.incrementIndexDesktop())))
-              : Container()),
-          Obx(() => _controller.indexPageDesktop.value > 0
-              ? Container(
-                  margin: EdgeInsets.only(left: 40),
-                  alignment: Alignment.centerLeft,
-                  child: PreviousButton(() => _pageView
-                      .jumpToPage(_controller.decrementIndexDesktop())))
-              : Container())
-        ],
-      )),
+      onWillPop: () async => false,
     );
   }
 
