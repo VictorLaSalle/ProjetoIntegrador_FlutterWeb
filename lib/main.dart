@@ -18,8 +18,8 @@ void main() async {
     onInit: () => Get.put(InitialBindings()),
     initialRoute: token == null && privateKey == null ? '/' : '/principal',
     getPages: [
-      GetPage(name: '/', page: () => LoginPage()),
-      GetPage(name: '/principal', page: () => PrincipalPage()),
+      GetPage(name: '/', page: () => LoginPage(), title: "Projeto Integrador"),
+      GetPage(name: '/principal', page: () => PrincipalPage(), title: "Projeto Integrador"),
     ],
   ));
 }
