@@ -7,7 +7,7 @@ class PrincipalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ResponsiveBuilder(
       builder: (context, sizeInfo) =>
-          sizeInfo.deviceScreenType == DeviceScreenType.desktop
-              ? PrincipalPageDesktop()
-              : PrincipalPageMobile());
+          sizeInfo.deviceScreenType == DeviceScreenType.mobile
+              ? PrincipalPageMobile()
+              : PrincipalPageDesktop());
 }

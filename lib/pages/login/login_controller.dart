@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:development/domains/enums/localStorage_enum.dart';
 import 'package:development/domains/models/private_key_model.dart';
+import 'package:development/gateways/gsheetsapi_gateway.dart';
 import 'package:development/gateways/login_gateway.dart';
 import 'package:development/pages/principal/principal_controller.dart';
-import 'package:development/pages/principal/principal_page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +14,7 @@ import 'package:dio/dio.dart';
 class LoginController extends GetxController {
   LoginGateway _login =
       LoginGateway(Dio(BaseOptions(contentType: "application/json")));
+  GSheetsApi _gsheets = GSheetsApi(Dio(BaseOptions(contentType: "application/json")));
   SharedPreferences? _prefs;
 
   FilePickerResult? result;
@@ -22,9 +23,7 @@ class LoginController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  void connect(String email, String password) async {
-    PrincipalController _principalController = Get.find<PrincipalController>();
-
+  Future connect(String email, String password) async {
     if (email.trim() != '' || password.trim() != '') {
       if (_key != null) {
         try {
@@ -33,34 +32,19 @@ class LoginController extends GetxController {
               await _login.getLogin(UserLoginModel.toJson(email, password));
           setCredentials(response.token, _key!);
 
-          try {
-            await _principalController.getData();
-            isLoading.value = false;
-          } catch (error) {
-            isLoading.value = false;
-            Get.snackbar('Erro',
-                'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
-          }
+          var _responseSheets = await _gsheets.getData({"private_key": _key!.privateKey, "token": response.token});
 
-          if (response.statusCode == 200 && result != null && file != null) {
+          if (_responseSheets.resposta1 != null && response.statusCode == 200 && result != null && file != null) {
             isLoading.value = false;
-            Get.to(PrincipalPage());
+            Get.toNamed('/principal');
+            Get.put(PrincipalController());
           } else {
+            isLoading.value = false;
             Get.snackbar('Divergência',
                 'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
           }
         } catch (error) {
-          isLoading.value = false;
-          if (error is DioError && error.response!.statusCode == 403) {
-            Get.snackbar('Divergência',
-                'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
-          } else if (error is DioError && error.response!.statusCode == 500) {
-            Get.snackbar('Erro',
-                'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
-          } else {
-            Get.snackbar('Erro',
-                'Desculpe :( ! Ocorreu um erro. Por favor, tente novamente mais tarde ou contate o suporte');
-          }
+          throw error;
         }
       } else {
         isLoading.value = false;

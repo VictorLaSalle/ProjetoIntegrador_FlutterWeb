@@ -15,21 +15,28 @@ class PrincipalController extends GetxController {
   RxInt indexPageDesktop = 0.obs;
   RxInt indexPageMobile = 0.obs;
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await getData();
+  }
+
   Future getData() async {
     try {
       loading.value = true;
       respostas.value = await _gSheetsApi.getData(
           {"private_key": await getPrivateKey(), "token": await getToken()});
       loading.value = false;
-    } on DioError catch (error) {
-      loading.value = false;
-      if (error.response!.statusCode == 403) {
-        throw error;
-      } else if (error.response!.statusCode == 500) {
-        throw error;
+
+      if(respostas.value.resposta1 == null) {
+        await logout();
+        Get.snackbar('Divergência',
+            'Suas credenciais expiraram. Autentique-se novamente');
       }
-    } catch (error) {
-      throw error;
+    } catch(error) {
+      await logout();
+      Get.snackbar('Divergência',
+          'Suas credenciais expiraram. Autentique-se novamente');
     }
   }
 

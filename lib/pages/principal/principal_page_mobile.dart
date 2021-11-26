@@ -9,12 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:development/constants.dart';
 
+
 class PrincipalPageMobile extends StatelessWidget {
-  final PrincipalController _controller = Get.find<PrincipalController>();
+  final PrincipalController _controller = Get.put(PrincipalController());
 
   Widget build(BuildContext context) {
     final PageController _pageView =
-        PageController(initialPage: _controller.indexPageDesktop.value);
+        PageController(initialPage: _controller.indexPageMobile.value);
 
     return Scaffold(
       floatingActionButton: Container(
@@ -37,121 +38,125 @@ class PrincipalPageMobile extends StatelessWidget {
           child: Stack(
         children: [
           Background(),
-          Center(
+    ContainerShadow(Obx(() => _controller.loading.value
+    ? CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+    )
+        : Center(
               child: PageView(
                   controller: _pageView,
                   children: [
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta1!['sim']!.values
+                            (_controller.respostas.value.resposta1!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta1!['nao']!.values
+                          (_controller.respostas.value.resposta1!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta1),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta2!['sim']!.values
+                          (_controller.respostas.value.resposta2!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta2!['nao']!.values
+                          (_controller.respostas.value.resposta2!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta2),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta3!['sim']!.values
+                          (_controller.respostas.value.resposta3!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta3!['nao']!.values
+                          (_controller.respostas.value.resposta3!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta3),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta4!['sim']!.values
+                          (_controller.respostas.value.resposta4!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta4!['nao']!.values
+                          (_controller.respostas.value.resposta4!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta4),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta5!['sim']!.values
+                          (_controller.respostas.value.resposta5!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta5!['nao']!.values
+                          (_controller.respostas.value.resposta5!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta5),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta6!['sim']!.values
+                          (_controller.respostas.value.resposta6!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta6!['nao']!.values
+                          (_controller.respostas.value.resposta6!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta6),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta7!['sim']!.values
+                          (_controller.respostas.value.resposta7!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta7!['nao']!.values
+                          (_controller.respostas.value.resposta7!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta7),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta8!['sim']!.values
+                          (_controller.respostas.value.resposta8!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta8!['nao']!.values
+                          (_controller.respostas.value.resposta8!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta8),
                     getSet([
                       SheetsData(
                           "Sim",
-                          (_controller.respostas.value.resposta9!['sim']!.values
+                          (_controller.respostas.value.resposta9!['sim']
                                   as double)
                               .toPrecision(2)),
                       SheetsData(
                           "Não",
-                          (_controller.respostas.value.resposta9!['nao']!.values
+                          (_controller.respostas.value.resposta9!['nao']
                                   as double)
                               .toPrecision(2))
                     ], pergunta9)
                   ],
                   allowImplicitScrolling: true,
-                  scrollDirection: Axis.horizontal)),
+                  scrollDirection: Axis.horizontal)))),
           Obx(() => _controller.indexPageMobile.value < 8
               ? Container(
                   margin: EdgeInsets.only(right: 30),

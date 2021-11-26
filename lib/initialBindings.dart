@@ -4,6 +4,4 @@ import './pages/principal/principal_controller.dart';
 
 class InitialBindings extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  final PrincipalController principalController =
-      Get.put(PrincipalController());
 }

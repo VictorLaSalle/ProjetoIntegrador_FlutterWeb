@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:development/constants.dart';
 
 class PrincipalPageDesktop extends StatelessWidget {
-  final PrincipalController _controller = Get.find<PrincipalController>();
+  final PrincipalController _controller = Get.put(PrincipalController());
 
   Widget build(BuildContext context) {
     final PageController _pageView =
@@ -81,7 +81,6 @@ class PrincipalPageDesktop extends StatelessWidget {
                   SheetsData(
                       "Não",
                       (_controller.respostas.value.resposta1!['nao'] as double)
-                          .toPrecision(2)
                           .toPrecision(2))
                 ], pergunta1),
               ),
@@ -136,13 +135,13 @@ class PrincipalPageDesktop extends StatelessWidget {
                     "Sim",
                     (_controller.respostas.value.resposta4!['sim'] as double)
                         .toPrecision(2)
-                        .toPrecision(2),
+                        ,
                   ),
                   SheetsData(
                       "Não",
                       (_controller.respostas.value.resposta4!['nao'] as double)
                           .toPrecision(2)
-                          .toPrecision(2))
+                          )
                 ], pergunta4),
               ),
             ),
@@ -155,12 +154,12 @@ class PrincipalPageDesktop extends StatelessWidget {
                       "Sim",
                       (_controller.respostas.value.resposta5!['sim'] as double)
                           .toPrecision(2)
-                          .toPrecision(2)),
+                          ),
                   SheetsData(
                       "Não",
                       (_controller.respostas.value.resposta5!['nao'] as double)
                           .toPrecision(2)
-                          .toPrecision(2))
+                          )
                 ], pergunta5),
               ),
             ),

@@ -60,8 +60,8 @@ class LoginPageDesktop extends StatelessWidget {
                     'Entrar',
                     style: TextStyle(color: Colors.orange),
                   )),
-            onPressed: () {
-              _controller.connect(_email.value.text, _password.value.text);
+            onPressed: () async {
+             await _controller.connect(_email.value.text, _password.value.text);
               _email.clear();
               _password.clear();
             },

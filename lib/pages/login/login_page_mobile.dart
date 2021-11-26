@@ -7,7 +7,7 @@ import '../../components/buttons/rounded_button.dart';
 import '../../components/buttons/border_button.dart';
 
 class LoginPageMobile extends StatelessWidget {
-  final LoginController _controller = Get.put(LoginController());
+  final LoginController _controller = Get.find<LoginController>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
@@ -68,8 +68,8 @@ class LoginPageMobile extends StatelessWidget {
                           'Entrar',
                           style: TextStyle(color: Colors.orange),
                         )),
-                  onPressed: () {
-                    _controller.connect(
+                  onPressed: () async {
+                    await _controller.connect(
                         _email.value.text, _password.value.text);
                     _email.clear();
                     _password.clear();
