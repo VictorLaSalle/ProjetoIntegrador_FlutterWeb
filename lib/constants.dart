@@ -1,4 +1,4 @@
-const String gsheetsAPI = 'http://gsheetsapi.herokuapp.com';
+const String gsheetsAPI = 'https://gsheetsapi.herokuapp.com';
 const String piAuthAPI = 'https://piauthapi.herokuapp.com';
 
 const String gsheetsAPIEndpoint = '/getData';
