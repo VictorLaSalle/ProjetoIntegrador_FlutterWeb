@@ -43,8 +43,12 @@ class LoginController extends GetxController {
             Get.snackbar('Divergência',
                 'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
           }
-        } catch (error) {
-          throw error;
+        } on DioError catch (error) {
+          if(error.response!.statusCode == 403) {
+            Get.snackbar('Divergência',
+                'Credenciais incorretas. Por favor, verifique suas credenciais e tente novamente.');
+            isLoading.value = false;
+          }
         }
       } else {
         isLoading.value = false;
